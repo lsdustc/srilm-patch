@@ -3,6 +3,7 @@ Add some function to srilm toolkit
 
 
 Function prune-size
+
 Usage： ngram -lm LM -order order -prune-size size -write-lm lm.prune
 
 Output:
