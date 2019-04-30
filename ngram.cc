@@ -117,7 +117,7 @@ static char *writeVocab  = 0;
 static int memuse = 0;
 static int renormalize = 0;
 static double prune = 0.0;
-static unsigned prunesize = 0;
+static double prunesize = 0.0;
 static int pruneLowProbs = 0;
 static char *pruneHistoryLM = 0;
 static int minprune = 2;
@@ -290,7 +290,7 @@ static Option options[] = {
     { OPT_STRING, "write-vocab", &writeVocab, "write LM vocab to file" },
     { OPT_TRUE, "renorm", &renormalize, "renormalize backoff weights" },
     { OPT_FLOAT, "prune", &prune, "prune redundant probs" },
-	{ OPT_UINT, "prune-size", &prunesize, "prune LM to a static size" },
+	{ OPT_FLOAT, "prune-size", &prunesize, "prune LM to a static size" },
     { OPT_UINT, "minprune", &minprune, "prune only ngrams at least this long" },
     { OPT_TRUE, "prune-lowprobs", &pruneLowProbs, "low probability N-grams" },
     { OPT_STRING, "prune-history-lm", &pruneHistoryLM, "LM used for history probabilities in pruning" },
@@ -1036,9 +1036,9 @@ main(int argc, char **argv)
     }
 	if (useLM == ngramLM) {
 
-		if (prune == 0.0 && prunesize != 0) 
+		if (prune == 0.0 && prunesize != 0.0) 
 		{
-			prune = ngramLM->getpruneProbs(prunesize, minprune);
+			prune = ngramLM->getpruneProbs(static_cast<long long>(prunesize), minprune);
 			ngramLM->pruneProbs(prune, minprune);
 		}
 
