@@ -2290,9 +2290,9 @@ Ngram::recomputeBOWs()
 double 
 Ngram::getpruneProbs(unsigned size,unsigned minorder){
 
-	double eplison,threshold;
-	eplison = threshold= 1e-9;
-	makeArray(VocabIndex, wordPlusContext, order + 2);
+    double eplison,threshold;
+    eplison = threshold= 1e-16;
+    makeArray(VocabIndex, wordPlusContext, order + 2);
     VocabIndex *context = &wordPlusContext[1];
     std::map<long long,int,greater<long long>> perpChanges;
     std::map<long long,int>::iterator it;
@@ -2366,10 +2366,10 @@ Ngram::getpruneProbs(unsigned size,unsigned minorder){
 		 */
 		double perpChange = LogPtoProb(deltaEntropy) - 1.0;
 		Boolean pruned = threshold > 0 && perpChange < threshold;
-        long long perpFixedChange = static_cast<long long>(perpChange/eplison);
-        perpChanges[perpFixedChange] += 1;
+        	long long perpFixedChange = static_cast<long long>(perpChange/eplison);
+        	perpChanges[perpFixedChange] += 1;
 
-	}
+		}
 	}
     }
     it = perpChanges.begin();
